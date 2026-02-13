@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="df715ff6-89a7-4d2c-9821-102f82dc3327" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="git-demoFlow" doc:id="70a16c3a-2c9f-4b2c-8430-e3b1b4149319" >
+		<http:listener doc:name="Listener" doc:id="1eb41b76-a65a-4873-948e-9afdfec80997" config-ref="HTTP_Listener_config" path="/api"/>
+		<logger level="INFO" doc:name="Logger" doc:id="96a8e809-187b-4c6d-a1ff-9003dfbf9c31" message="hello"/>
+		<ee:transform doc:name="Transform Message" doc:id="63680ed5-ad69-49fd-8c2b-1f8acdb19b15" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"Hello!"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="7e9d394f-ba3d-4994-a4dc-e3960e1b07b7" message="hello"/>
+	</flow>
+</mule>
